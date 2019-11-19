@@ -5,20 +5,16 @@ const userController = require('../controllers/userController');
 
 router.get('/', userController.user_list_get);
 
-router.get('/:id', (req, res) => {
-    res.send(`You requested a user whose id is ${req.params.id}`);
-});
+router.get('/:id', userController.user_get);
 
-router.post('/', (req, res) => {
-    res.send('With this endpoint you can add cats.');
-});
+router.post('/', userController.user_create_post);
 
 router.put('/', (req, res) => {
-    res.send('With this endpoint you can edit cats.');
+    res.send('With this endpoint you can edit users.');
 });
 
 router.delete('/', (req, res) => {
-    res.send('With this endpoint you can delete cats.');
+    res.send('With this endpoint you can delete users.');
 });
 
 module.exports = router;
