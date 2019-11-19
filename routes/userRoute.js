@@ -1,12 +1,12 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const catController = require('../controllers/catController');
+const userController = require('../controllers/userController');
 
-router.get('/', catController.cat_list_get);
+router.get('/', userController.user_list_get);
 
 router.get('/:id', (req, res) => {
-    res.send(`You requested a cat whose id is ${req.params.id}`);
+    res.send(`You requested a user whose id is ${req.params.id}`);
 });
 
 router.post('/', (req, res) => {

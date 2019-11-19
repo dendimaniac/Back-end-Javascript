@@ -3,8 +3,10 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-app.get('/cat', (req, res) => {
-  res.send('With this endpoint you can get cats.');
-});
+const catRoute = require('./routes/catRoute');
+const userRoute = require('./routes/userRoute');
+
+app.use('/cat', catRoute);
+app.use('/user', userRoute);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
