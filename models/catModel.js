@@ -4,11 +4,23 @@ const promisePool = pool.promise();
 
 const getAllCats = async () => {
     try {
-        const [rows] = await promisePool.query('SELECT * FROM wop_cat');
+        const [rows] = await promisePool.query('SELECT wop_cat.*, wop_user.name as ownername FROM wop_cat JOIN wop_user ON wop_user.user_id = wop_cat.owner');
+        return rows;
+    } catch (e) {
+        console.log(e);
+        return {error: 'error in query'};
+    }
+};
+
+const addCat = async (params) => {
+    try {
+        const [rows] = await promisePool.execute(
+            'INSERT INTO wop_cat (name, age, weight, owner, filename) VALUES (?, ?, ?, ?, ?);',
+            params
+        );
         return rows;
     } catch (e) {
         console.log('error', e.message);
-        return {error: 'error in query'};
     }
 };
 
@@ -23,7 +35,32 @@ const getCat = async (params) => {
     }
 };
 
+const updateCat = async (params) => {
+    try {
+        const [rows] = await promisePool.execute('UPDATE wop_cat SET name = ?, age = ?, weight = ?, owner = ? WHERE wop_cat.cat_id = ?',
+            params);
+        return rows;
+    } catch (e) {
+        console.log('error', e.message);
+        return {error: 'error in query'};
+    }
+};
+
+const deleteCat = async (params) => {
+    try {
+        const [rows] = await promisePool.execute('DELETE FROM wop_cat WHERE cat_id = ?',
+            params);
+        return rows;
+    } catch (e) {
+        console.log('error', e.message);
+        return {error: 'error in query'};
+    }
+};
+
 module.exports = {
     getAllCats,
     getCat,
+    addCat,
+    updateCat,
+    deleteCat,
 };
